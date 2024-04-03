@@ -2,6 +2,7 @@ package helper
 
 import (
 	"context"
+	"fmt"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -29,4 +30,13 @@ func GetFromRedis(trimmedHash string) (string, string) {
 	}
 	return val, ""
 
+}
+
+func DeleteFromRedis(url string) error {
+	// Delete the URL from Redis
+	_, err := client.Del(ctx, url).Result()
+	if err != nil {
+		return fmt.Errorf("failed to delete URL from Redis: %w", err)
+	}
+	return nil
 }

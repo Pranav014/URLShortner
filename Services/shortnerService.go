@@ -37,3 +37,20 @@ func RedirectURL(shortURL string) (string, error) {
 	}
 	return "", fmt.Errorf("URL not found")
 }
+
+func deleteURL(shortURL string) {
+	// This function will be used to delete the URL
+	helper.DeleteFromRedis(shortURL)
+}
+
+func DeleteURL(url string) error {
+	// Delete the URL from Redis
+	err := helper.DeleteFromRedis(url)
+	if err != nil {
+		// If there was an error deleting the URL from Redis, return an error response
+		return fmt.Errorf("failed to delete URL: %w", err)
+	}
+
+	// If deletion was successful, return a success message
+	return nil
+}

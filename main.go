@@ -3,6 +3,7 @@ package main
 import (
 	"awesomeProject/Services"
 	"github.com/gin-gonic/gin"
+
 	"net/http"
 )
 
@@ -48,11 +49,24 @@ func redirectURLendpoint(c *gin.Context) {
 	}
 }
 
+// Endpoint to Delete
+func deleteURL(c *gin.Context) {
+	shortURL := c.Param("shortURL")
+	err := Services.DeleteURL(shortURL)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "URL deleted successfully"})
+
+}
+
 func main() {
 	router := gin.Default()
 	router.POST("/shortenURL", shortenURL)
 	router.GET("/:shortURL", redirectURLendpoint)
-
+	router.DELETE("/:shortURL", deleteURL)
 	router.Run("localhost:8080")
 
 }

@@ -3,6 +3,27 @@
 
 This project is a URL shortener implemented in Go, leveraging Redis as the backend data store. It provides a simple and efficient way to generate shortened URLs for long web addresses, facilitating easy sharing while conserving space.
 
+The project utilizes hashing algorithms such as SHA-1 to generate unique short URLs for long addresses, which are then stored in Redis for quick retrieval. It also includes endpoints for accessing statistics on the usage of shortened URLs, as well as health checks to ensure the application is running smoothly.
+
+The application is built using the following technologies:
+- Go: A statically typed, compiled programming language designed for simplicity and efficiency.
+- Redis: An open-source, in-memory data structure store used as a database, cache, and message broker.
+- Gin: A web framework written in Go that provides routing, middleware, and other functionalities for building web applications.
+
+
+## Features
+Endpoints:
+- `/shorten`: Accepts a POST request with a JSON payload containing the long URL to be shortened. It generates a unique short URL and stores the mapping in Redis.
+- `/{shortURL}`: Redirects to the original long URL associated with the provided short URL.
+- `/stats/{shortURL}`: Retrieves statistics for the provided short URL, including the number of times the URL has been accessed and the timestamp of the last access.
+- `/health`: Returns the health status of the application.
+- `/{shortURL}` : DELETE request to delete the short URL from the database.
+- `/Qr/{shortURL}` : GET request to get the QR code of the short URL.
+- `/list` : GET request to get the list of all the short URLs.
+- `/list/{shortURL}` : GET request to get the details of the short URL.
+
+
+
 ## Installation
 
 ### Prerequisites
@@ -11,6 +32,7 @@ Before getting started, ensure you have the following prerequisites installed on
 
 - Go: [Installation Guide](https://golang.org/doc/install)
 - Redis: [Installation Guide](https://redis.io/download)
+
 
 ### Steps
 
